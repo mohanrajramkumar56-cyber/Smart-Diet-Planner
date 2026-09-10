@@ -1,0 +1,9 @@
+Django>=5.2,<6.0
+djangorestframework>=3.14,<4.0
+django-cors-headers>=4.3,<5.0
+google-genai>=1.0,<2.0
+pycountry>=24.0,<25.0
+reportlab>=4.0,<5.0
+python-dotenv>=1.0,<2.0
+gunicorn>=21.0,<22.0
+whitenoise>=6.6,<7.0

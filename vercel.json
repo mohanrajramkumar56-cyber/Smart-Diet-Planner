@@ -1,0 +1,27 @@
+{
+  "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
+  "outputDirectory": "staticfiles",
+  "devCommand": "python manage.py runserver",
+  "installCommand": "pip install -r requirements.txt",
+  "framework": "django",
+  "functions": {
+    "api/**/*.py": {
+      "runtime": "python3.12",
+      "maxDuration": 30
+    }
+  },
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/$1"
+    }
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "smart_diet_ai.settings",
+    "PYTHONPATH": "."
+  }
+}
