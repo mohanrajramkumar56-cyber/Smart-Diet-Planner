@@ -1,0 +1,1 @@
+# Diet app initialization

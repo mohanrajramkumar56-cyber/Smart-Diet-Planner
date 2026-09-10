@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nourish — AI Nutrition Planner</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Nourish</h1>
+            <p class="subtitle">Your personal AI nutritionist — precision meal planning, zero guesswork.</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="nav-item active" onclick="showSection('home')">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" onclick="showSection('generate')">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <span>Generate Plan</span>
+                </div>
+                <div class="nav-item" onclick="showSection('history')">
+                    <i class="fas fa-clock-rotate-left"></i>
+                    <span>History</span>
+                </div>
+                <div class="nav-item" onclick="showSection('feedback')">
+                    <i class="fas fa-star"></i>
+                    <span>Feedback</span>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div class="content-area">
+                <!-- Home Section -->
+                <div id="home" class="section active">
+                    <h2>Welcome Back! 👋</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.6;">
+                        Ready to transform your health? Our advanced AI analyzes your unique profile to create the
+                        perfect nutrition plan for your goals.
+                    </p>
+
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>AI Powered</h3>
+                            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Personalized plans using
+                                advanced machine learning</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3>Goal Focused</h3>
+                            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Tailored nutrition to help you
+                                reach your targets</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <h3>Diverse Foods</h3>
+                            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Includes South Indian, Vegan,
+                                Keto & more</p>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary generate-btn" onclick="showSection('generate')">
+                        <i class="fas fa-rocket"></i>
+                        Start Your Journey
+                    </button>
+                </div>
+
+                <!-- Generate Plan Section -->
+                <div id="generate" class="section">
+                    <h2>Create New Plan 🥗</h2>
+
+                    <form id="dietForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" class="form-control" placeholder="25" min="1" max="120"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" class="form-control" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="height">Height (cm)</label>
+                                <input type="number" id="height" class="form-control" placeholder="175" min="100"
+                                    max="250" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="weight">Weight (kg)</label>
+                                <input type="number" id="weight" class="form-control" placeholder="70" min="30"
+                                    max="300" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity">Activity Level</label>
+                                <select id="activity" class="form-control" required>
+                                    <option value="">Select Activity Level</option>
+                                    <option value="sedentary">Sedentary (little/no exercise)</option>
+                                    <option value="light">Light (1-3 days/week)</option>
+                                    <option value="moderate">Moderate (3-5 days/week)</option>
+                                    <option value="active">Active (6-7 days/week)</option>
+                                    <option value="very_active">Very Active (physical job)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="goal">Health Goal</label>
+                                <select id="goal" class="form-control" required>
+                                    <option value="">Select Your Goal</option>
+                                    <option value="lose">Weight Loss</option>
+                                    <option value="gain">Weight Gain</option>
+                                    <option value="maintain">Maintain Weight</option>
+                                    <option value="muscle">Build Muscle</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="diet_type">Diet Preference</label>
+                                <select id="diet_type" class="form-control" required>
+                                    <option value="">Select Diet Type</option>
+                                    <option value="vegetarian">Vegetarian</option>
+                                    <option value="non_vegetarian">Non-Vegetarian</option>
+                                    <option value="vegan">Vegan</option>
+                                    <option value="keto">Keto</option>
+                                    <option value="paleo">Paleo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country (Optional)</label>
+                                <select id="country" class="form-control">
+                                    <option value="">Select Country</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="medical_conditions">Medical Conditions (Optional)</label>
+                                <input type="text" id="medical_conditions" class="form-control"
+                                    placeholder="e.g., Diabetes, Hypertension">
+                            </div>
+                            <div class="form-group">
+                                <label for="allergies">Allergies (Optional)</label>
+                                <input type="text" id="allergies" class="form-control"
+                                    placeholder="e.g., Peanuts, Dairy, Gluten">
+                            </div>
+                            <div class="form-group">
+                                <label for="favorite_foods">Favorite Foods (Optional)</label>
+                                <input type="text" id="favorite_foods" class="form-control"
+                                    placeholder="e.g., South Indian, Chicken, Paneer">
+                            </div>
+                            <div class="form-group">
+                                <label for="disliked_foods">Disliked Foods (Optional)</label>
+                                <input type="text" id="disliked_foods" class="form-control"
+                                    placeholder="e.g., Broccoli, Mushrooms">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary generate-btn">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                            Generate Personalized Plan
+                        </button>
+                    </form>
+
+                    <div id="loadingDiv" class="loading-container" style="display: none;">
+                        <div class="spinner"></div>
+                        <h3>Crafting Your Plan...</h3>
+                        <p style="color: var(--text-secondary);">Our AI is analyzing your profile and selecting the best
+                            meals.</p>
+                    </div>
+
+                    <div id="dietPlanResult"></div>
+                </div>
+
+                <!-- History Section -->
+                <div id="history" class="section">
+                    <h2>Plan History 📚</h2>
+                    <div id="historyContainer">
+                        <div style="text-align: center; padding: 4rem; color: var(--text-secondary);">
+                            <i class="fas fa-history" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p>No diet plans generated yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback Section -->
+                <div id="feedback" class="section">
+                    <h2>Your Feedback ⭐</h2>
+                    <div id="feedbackContainer">
+                        <div style="text-align: center; padding: 4rem; color: var(--text-secondary);">
+                            <i class="fas fa-comment-alt"
+                                style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p>Generate a diet plan first to provide feedback!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Credits Footer -->
+    <div class="credits-footer enhanced-glow">
+        <div class="credits-title">Built with Nourish</div>
+        <div class="credits-names">MOHANRAJ R</div>
+    </div>
+
+    <script>
+        let currentProfileId = null;
+        let currentDietPlanId = null;
+
+        // Navigation
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.getElementById(sectionName).classList.add('active');
+
+            // Find nav item that calls this function
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                if (item.getAttribute('onclick').includes(sectionName)) {
+                    item.classList.add('active');
+                }
+            });
+
+            if (sectionName === 'history' && currentProfileId) {
+                loadHistory();
+            }
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 3000);
+        }
+
+        // Handle form submission
+        document.getElementById('dietForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                age: parseInt(document.getElementById('age').value),
+                gender: document.getElementById('gender').value,
+                height: parseFloat(document.getElementById('height').value),
+                weight: parseFloat(document.getElementById('weight').value),
+                activity_level: document.getElementById('activity').value,
+                goal: document.getElementById('goal').value,
+                diet_type: document.getElementById('diet_type').value,
+                medical_conditions: document.getElementById('medical_conditions').value,
+                allergies: document.getElementById('allergies').value,
+                favorite_foods: document.getElementById('favorite_foods').value,
+                disliked_foods: document.getElementById('disliked_foods').value
+            };
+
+            try {
+                document.getElementById('loadingDiv').style.display = 'block';
+                document.getElementById('dietPlanResult').innerHTML = '';
+
+                // Create profile
+                const profileResponse = await fetch('/api/create-profile/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const profileData = await profileResponse.json();
+
+                if (profileData.success) {
+                    currentProfileId = profileData.profile_id;
+
+                    // Generate diet plan
+                    const planResponse = await fetch('/api/generate-plan/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ profile_id: currentProfileId })
+                    });
+
+                    if (!planResponse.ok) {
+                        const errorText = await planResponse.text();
+                        console.error('Server error:', errorText);
+                        showToast('Server error: ' + planResponse.status + ' ' + planResponse.statusText, 'error');
+                    } else {
+                        const planData = await planResponse.json();
+
+                        if (planData.success) {
+                            currentDietPlanId = planData.diet_plan_id;
+                            displayDietPlan(planData.diet_plan);
+                            showToast('Diet plan generated successfully!');
+                        } else {
+                            showToast('Error generating plan: ' + (planData.error || 'Unknown error'), 'error');
+                        }
+                    }
+                } else {
+                    showToast('Error creating profile', 'error');
+                }
+            } catch (error) {
+                showToast('Network error: ' + error.message, 'error');
+            } finally {
+                document.getElementById('loadingDiv').style.display = 'none';
+            }
+        });
+
+        // Display diet plan
+        function displayDietPlan(planData) {
+            const container = document.getElementById('dietPlanResult');
+
+            let html = `
+                <div class="diet-plan-container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3>Your Personalized Plan</h3>
+                        <button class="btn btn-primary" onclick="downloadPDF()" style="font-size: 0.9rem; padding: 0.75rem 1.5rem;">
+                            <i class="fas fa-download"></i> Download PDF
+                        </button>
+                    </div>
+                    
+                    <div class="nutrition-summary">
+                        <div class="macro-item">
+                            <strong>Daily Calories</strong>
+                            <span>${planData.total_calories_per_day || 2000}</span>
+                        </div>
+                        <div class="macro-item">
+                            <strong>Protein</strong>
+                            <span>${planData.nutritional_summary?.daily_protein || '80g'}</span>
+                        </div>
+                        <div class="macro-item">
+                            <strong>Carbs</strong>
+                            <span>${planData.nutritional_summary?.daily_carbs || '200g'}</span>
+                        </div>
+                        <div class="macro-item">
+                            <strong>Fats</strong>
+                            <span>${planData.nutritional_summary?.daily_fat || '60g'}</span>
+                        </div>
+                    </div>
+            `;
+
+            if (planData.days) {
+                planData.days.forEach(day => {
+                    html += `
+                        <div class="day-card">
+                            <div class="day-title">
+                                <i class="fas fa-calendar-day"></i>
+                                ${day.day}
+                            </div>
+                            <div class="meals-grid">
+                    `;
+
+                    day.meals.forEach(meal => {
+                        html += `
+                            <div class="meal-card">
+                                <div class="meal-type">${meal.meal_type}</div>
+                                <div class="meal-time">
+                                    <i class="far fa-clock"></i> ${meal.time}
+                                </div>
+                                <div class="food-list">
+                                    ${meal.food_items.join('<br>')}
+                                </div>
+                                <div class="meal-macros">
+                                    <span>${meal.calories} cal</span>
+                                    <span>P: ${meal.protein}</span>
+                                    <span>C: ${meal.carbs}</span>
+                                    <span>F: ${meal.fat}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+
+            // Scroll to result
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Placeholder functions for history and download
+        function downloadPDF() {
+            if (!currentDietPlanId) return;
+            window.open(`/api/download-pdf/${currentDietPlanId}/`, '_blank');
+        }
+
+        async function loadHistory() {
+            if (!currentProfileId) return;
+
+            try {
+                const response = await fetch(`/api/history/${currentProfileId}/`);
+                const data = await response.json();
+
+                const container = document.getElementById('historyContainer');
+
+                if (data.success && data.history.length > 0) {
+                    let html = '';
+                    data.history.forEach(plan => {
+                        const date = new Date(plan.created_at).toLocaleDateString();
+                        html += `
+                            <div class="day-card" style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">${plan.plan_summary || 'Nourish Plan'}</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Created: ${date}</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="window.open('/api/download-pdf/${plan.id}/', '_blank')" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Run initialization
+        initDashboard();
+
+        // Populate country dropdown
+        async function populateCountryDropdown() {
+            try {
+                const response = await fetch('/api/countries/');
+                if (response.ok) {
+                    const data = await response.json();
+                    const select = document.getElementById('country');
+                    if (select && data.countries) {
+                        data.countries.forEach(country => {
+                            const option = document.createElement('option');
+                            option.value = country.code;
+                            option.textContent = country.name;
+                            select.appendChild(option);
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to load countries:', e);
+            }
+        }
+
+        // Populate countries on page load
+        populateCountryDropdown();
+    </script>
+</body>
+
+</html>
